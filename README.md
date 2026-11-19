@@ -51,7 +51,7 @@ Each script prints one PASS/FAIL line and writes its entry to `results/summary.j
 | T4 | shuffled labels give majority-class validation accuracy | `python validate/t4_label_shuffle.py` |
 | T5 | 3-round trace, aggregation recomputed by hand, determinism | `python validate/t5_trace.py` |
 | T6 | Laplace noise mean, E\|ε\|, variance, KS test; b = 0 is the identity | `python validate/t6_laplace.py` |
-| T7 | test accuracy non-increasing in b and at the majority rate for b = 10 | `python validate/t7_noise_limits.py` |
+| T7 | test accuracy non-increasing in b; at b = 10 no better than the majority rate | `python validate/t7_noise_limits.py` |
 | T8 | fixed vs fresh noise: accuracy and privacy cost m/b | `python validate/t8_fixed_vs_fresh.py` |
 
 T7 needs `final_test.py --sweep p2` first.
