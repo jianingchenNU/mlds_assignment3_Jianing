@@ -1,0 +1,59 @@
+{
+  "T1": {
+    "what": "FedAvg == centralized GD (C=1,E=1,full batch); FedAvg K=1 == local SGD",
+    "prediction": "max |dw| < 1e-05 for both",
+    "measured": "(a) max |dw| = 3.725e-08 over 10 rounds, K=100; (b) max |dw| = 0.000e+00 over 5 rounds",
+    "pass": true,
+    "quick": false
+  },
+  "T5": {
+    "what": "3-round trace; aggregation recomputed by hand; determinism across two runs",
+    "prediction": "recompute error < 1e-06; two runs identical",
+    "measured": "max recompute error 7.423e-09; runs identical = True",
+    "pass": true,
+    "quick": false
+  },
+  "T2": {
+    "what": "Ray backend == serial backend; actor lifecycle; wall-clock scaling with E",
+    "prediction": "max |dw| < 1e-06; alive 0/4/0 before/during/after every round; measured crossover E* within 2x of predicted c/(3 t1)",
+    "measured": "max |dw| = 0.000e+00; lifecycle 0/4/0 every round = True; E=5 round time serial 0.224 s vs ray 3.618 s; E* predicted 195.0, measured 301.9",
+    "pass": true,
+    "quick": false
+  },
+  "T6": {
+    "what": "Laplace noise statistics; b = 0 is the identity",
+    "prediction": "|mean| < 0.01 b, E|eps| and Var within 2%, KS p > 0.01; b = 0 bitwise identical data and history",
+    "measured": "b=0.1: mean -3.0e-05, E|eps| +0.00%, Var +0.00%, KS p 0.722; b=0.5: mean -1.5e-04, E|eps| +0.00%, Var +0.00%, KS p 0.722; b=1.0: mean -3.0e-04, E|eps| +0.00%, Var +0.00%, KS p 0.722; b=0 data identical True, history identical True",
+    "pass": true,
+    "quick": false
+  },
+  "T3": {
+    "what": "non-IID vs IID re-partition: accuracy and client drift",
+    "prediction": "IID val acc > natural for each E; drift increasing in E; drift natural > IID",
+    "measured": "E=1: val nat 0.4803 iid 0.4800, drift nat 0.238 iid 0.178; E=5: val nat 0.6569 iid 0.6763, drift nat 0.904 iid 0.720; E=10: val nat 0.6967 iid 0.7368, drift nat 1.458 iid 1.266; checks (1) False (2) True (3) True",
+    "pass": false,
+    "quick": false
+  },
+  "T4": {
+    "what": "labels shuffled within clients: no generalization",
+    "prediction": "val acc within +-0.02 of majority-class val rate; train acc may rise",
+    "measured": "majority val rate 0.0596; final val acc 0.0564 (-0.0031); train acc 0.0673; 100 rounds",
+    "pass": true,
+    "quick": false
+  },
+  "T8": {
+    "what": "fixed vs fresh noise at the same b; privacy composition",
+    "prediction": "fresh clean test acc > fixed clean test acc; fresh spends epsilon_total = m/b with m = rounds selected x E",
+    "measured": "b=0.5, 100 rounds: test fixed 0.5278, fresh 0.5639; secondary noisy val fixed 0.2256, fresh 0.3264; m mean 50.00 (all clients), 50.00 (selected), max 85; epsilon_total mean 100 vs fixed 2",
+    "pass": true,
+    "quick": false,
+    "note": "primary metric changed from noisy val accuracy to clean test accuracy after the quick run (val-based quick run: fixed 0.1145, fresh 0.0986, FAIL) and before any full run"
+  },
+  "T7": {
+    "what": "accuracy vs noise scale: monotone decline and floor at the majority rate",
+    "prediction": "(a) acc non-increasing in b within 0.01; (b) acc(b=10) <= majority + 0.03; knee reported vs b* (no criterion)",
+    "measured": "failing pairs: none; acc(b=10) 0.0226, majority 0.0610; b* 0.1124; halfway b 0.8960",
+    "pass": true,
+    "quick": false
+  }
+}

@@ -1,0 +1,16 @@
+data/
+Assignment3-data/
+runs/
+*.pt
+*.pth
+*.ckpt
+*.pdf
+__pycache__/
+*.pyc
+.venv/
+venv/
+results/smoke/
+!report/report.pdf
+report/*.md
+report/*.html
+report/build.py
